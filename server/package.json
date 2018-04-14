@@ -1,0 +1,19 @@
+{
+  "name": "mean-social",
+  "version": "1.0.0",
+  "description": "Red social con el stack MEAN",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpablopachar/mean-social.git"
+  },
+  "author": "Juan Pablo Pachar Viñan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpablopachar/mean-social/issues"
+  },
+  "homepage": "https://github.com/jpablopachar/mean-social#readme"
+}
