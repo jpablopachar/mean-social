@@ -15,5 +15,17 @@
   "bugs": {
     "url": "https://github.com/jpablopachar/mean-social/issues"
   },
-  "homepage": "https://github.com/jpablopachar/mean-social#readme"
+  "homepage": "https://github.com/jpablopachar/mean-social#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "connect-multiparty": "^2.1.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.22.0",
+    "mongoose": "^5.0.14",
+    "mongoose-pagination": "^1.0.0",
+    "morgan": "^1.9.0"
+  }
 }
