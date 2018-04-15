@@ -105,33 +105,33 @@ function getUser(req, res) {
   });
 }
 
-/*function getUsers(req, res) {
-  const identity_user_id = req.user.sub;
+function getUsers(req, res) {
+  //const identity_user_id = req.user.sub; // Almacena el id del usuario logueado
   let page = 1;
-  let itemsPerPage = 5; // Cantidad de usuarios por página
+  let itemsPerPage = 5; // Cantidad de usuarios que se muestran por página
 
   if (req.params.page) {
     page = req.params.page;
   }
 
   User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
-    if (err) return res.status(505).send({message: 'Error en la petición'});
+    if (err) return res.status(505).send({message: 'Error in user request'});
 
-    if (!users) return res.status(404).send({message: 'No hay usuarios'});
+    if (!users) return res.status(404).send({message: 'There are no users'});
 
-    followUserIds(identity_user_id).then((value) => {
+    //followUserIds(identity_user_id).then((value) => {
       return res.status(200).send({
         users,
-        users_following: value.following,
-        users_followe_me: value.followed,
+        //users_following: value.following,
+        //users_followe_me: value.followed,
         total,
         pages: Math.ceil(total / itemsPerPage)
       });
-    });
+    //});
   });
 }
 
-function getCounters(req, res) {
+/*function getCounters(req, res) {
   let userId = req.user.sub;
 
   if (req.params.id) {
@@ -306,9 +306,9 @@ async function getCountFollow(user_id) {
 module.exports = {
   saveUser,
   loginUser,
-  getUser
-  /*getUsers,
-  getCounters,
+  getUser,
+  getUsers
+  /*getCounters,
   updateUser,
   uploadImage,
   getImageFile*/
