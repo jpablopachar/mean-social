@@ -86,25 +86,26 @@ function loginUser(req, res) {
   });
 }
 
-/*function getUser(req, res) {
-  const userId = req.params.id;
+// Method that returns the data of a user
+function getUser(req, res) {
+  const userId = req.params.id; // Stores a parameter that reaches us by url
 
   User.findById(userId, (err, user) => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+    if (err) return res.status(500).send({message: 'Error in user request'});
 
-    if (!user) return res.status(404).send({message: 'El usuario no existe'});
+    if (!user) return res.status(404).send({message: 'The user does not exist'});
 
-    followThisUser(req.user.sub, userId).then((value) => {
+    /*followThisUser(req.user.sub, userId).then((value) => {
       user.password = undefined;
 
       return res.status(200).send({user, following: value.following, followed: value.followed});
-    });
+    });*/
 
-    // return res.status(200).send({user});
+    return res.status(200).send({user});
   });
 }
 
-function getUsers(req, res) {
+/*function getUsers(req, res) {
   const identity_user_id = req.user.sub;
   let page = 1;
   let itemsPerPage = 5; // Cantidad de usuarios por página
@@ -304,9 +305,9 @@ async function getCountFollow(user_id) {
 
 module.exports = {
   saveUser,
-  loginUser
-  /*getUser,
-  getUsers,
+  loginUser,
+  getUser
+  /*getUsers,
   getCounters,
   updateUser,
   uploadImage,
