@@ -7,8 +7,8 @@ const path = require('path');
 
 const User = require('../models/user');
 /*const Follow = require('../models/follow');
-const Publication = require('../models/publication');
-const jwt = require('../services/jwt');*/
+const Publication = require('../models/publication');*/
+const jwt = require('../services/jwt');
 
 // Method for registering a new user
 function saveUser(req, res) {
@@ -67,7 +67,7 @@ function loginUser(req, res) {
       bcrypt.compare(password, user.password, (err, check) => {
         if (check) {
           // Returns the data of the connected user
-          if (params.gethash) {
+          if (params.getToken) {
             // Generates and returns a token of jwt
             res.status(200).send({
               token: jwt.createToken(user)

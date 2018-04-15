@@ -12,7 +12,7 @@ const userRoutes = require('./routes/user');
 const publicationRoutes = require('./routes/publication');
 const messageRoutes = require('./routes/message');*/
 
-// mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 
 // Connected to the mongodb database
 mongoose.connect('mongodb://localhost:27017/mean_social').then(() => console.log('Connected database')).catch(err => console.log(err));
