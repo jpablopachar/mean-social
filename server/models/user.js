@@ -7,7 +7,7 @@ const Schema = mongoose.Schema; // Defines a database model
 const UserSchema = new Schema({
   name: String,
   surname: String,
-  nick: String,
+  nickname: String,
   email: String,
   password: String,
   role: String,
