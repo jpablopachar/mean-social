@@ -4,7 +4,7 @@ const express = require('express');
 const multipart = require('connect-multiparty');
 
 const UserController = require('../controllers/user');
-//const md_auth = require('../middlewares/authenticated');
+const md_auth = require('../middlewares/authenticated');
 
 const router = express.Router();
 //const md_upload = multipart({uploadDir: './uploads/users'});
