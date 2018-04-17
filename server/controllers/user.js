@@ -6,8 +6,8 @@ const fs = require('fs');
 const path = require('path');
 
 const User = require('../models/user');
-/*const Follow = require('../models/follow');
-const Publication = require('../models/publication');*/
+/* const Follow = require('../models/follow');
+const Publication = require('../models/publication'); */
 const jwt = require('../services/jwt');
 
 // Method for registering a new user
@@ -105,10 +105,11 @@ function getUser(req, res) {
   });
 }
 
+// List all users stored by page blocks
 function getUsers(req, res) {
   //const identity_user_id = req.user.sub; // Almacena el id del usuario logueado
   let page = 1;
-  let itemsPerPage = 5; // Cantidad de usuarios que se muestran por página
+  let itemsPerPage = 5; // Number of users displayed per page
 
   if (req.params.page) {
     page = req.params.page;
