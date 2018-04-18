@@ -125,7 +125,7 @@ function getUsers(req, res) {
         // users_following: value.following,
         // users_followe_me: value.followed,
         total,
-        pages: Math.ceil(total / itemsPerPage)
+        pages: Math.ceil(total / itemsPerPage),
       });
     // });
   });
@@ -173,64 +173,59 @@ function updateUser(req, res) {
   // });
 }
 
-/* function uploadImage(req, res) {
-  let userId = req.params.id;
-  // let file_name = 'No subido';
-
-  if (req.files) {
-    let file_path = req.files.image.path;
-    console.log(file_path);
-    let file_split = file_path.split('/');
-    console.log(file_split);
-    let file_name = file_split[2];
-    console.log(file_name);
-    let ext_split = file_name.split('\.');
-    console.log(ext_split);
-    let file_ext = ext_split[1];
-    console.log(file_ext);
-
-    if (userId != req.user.sub) {
-      return removeFilesOfUploads(res, file_path, 'No tienes permiso para actualizar los datos del usuario');
-    }
-
-    if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
-      User.findByIdAndUpdate(userId, {image: file_name}, {new: true}, (err, userUpdated) => {
-        if (err) return res.status(505).send({message: 'Error en la petición'});
-
-        if (!userUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
-
-        userUpdated.password = undefined;
-
-        return res.status(200).send({userUpdated});
-      });
-    } else {
-      return removeFilesOfUploads(res, file_path, 'Extensión no válida');
-    }
-  } else {
-    res.status(200).send({message: 'No se ha subido ninguna imagen'});
-  }
-} */
-
-/* function getImageFile(req, res) {
-  let imageFile = req.params.imageFile;
-  let path_file = './uploads/users/' + imageFile;
-
-  fs.exists(path_file, (exists) => {
-    if (exists) {
-      res.sendFile(path.resolve(path_file));
-    } else {
-      res.status(200).send({message: 'No existe la imagen'});
-    }
-  });
-} */
-
-/* function removeFilesOfUploads(res, file_path, message) {
-  fs.unlink(file_path, (err) => {
-    return res.status(200).send({message: message});
+function removeFilesOfUploads(res, filePath, message) {
+  fs.unlink(filePath, (err) => {
+    return res.status(200).send({ message: message });
   });
 }
 
-async function followThisUser(identity_user_id, user_id) {
+function uploadImage(req, res) {
+  const userId = req.params.id;
+
+  if (req.files) {
+    const filePath = req.files.image.path;
+    const fileSplit = filePath.split('/');
+    const fileName = fileSplit[2];
+    const extSplit = fileName.split('.');
+    const fileExt = extSplit[1];
+
+    if (userId !== req.user.sub) {
+      return removeFilesOfUploads(res, filePath, 'You do not have permission to update user data');
+    }
+
+    if (fileExt === 'png' || fileExt === 'jpg' || fileExt === 'jpeg' || fileExt === 'gif') {
+      // Update user data logged in
+      User.findByIdAndUpdate(userId, { image: fileName }, { new: true }, (err, userUpdated) => {
+        if (err) return res.status(505).send({ message: 'Error in user request' });
+
+        if (!userUpdated) return res.status(404).send({ message: 'The user could not be updated' });
+
+        userUpdated.password = undefined;
+
+        return res.status(200).send({ userUpdated });
+      });
+    } else {
+      return removeFilesOfUploads(res, filePath, 'Invalid extension');
+    }
+  } else {
+    res.status(200).send({ message: 'No image has been uploaded' });
+  }
+}
+
+function getImageFile(req, res) {
+  const imageFile = req.params.imageFile;
+  const pathFile = './uploads/users/' + imageFile;
+
+  fs.exists(pathFile, (exists) => {
+    if (exists) {
+      res.sendFile(path.resolve(pathFile));
+    } else {
+      res.status(200).send({ message: 'There is no image' });
+    }
+  });
+}
+
+/* async function followThisUser(identity_user_id, user_id) {
   let following = await Follow.findOne({'user': identity_user_id, 'followed': user_id}).exec((err, follow) => {
     if (err) return handleError(err);
 
@@ -311,6 +306,6 @@ module.exports = {
   getUsers,
   // getCounters,
   updateUser,
-  /* uploadImage,
-  getImageFile */
+  uploadImage,
+  getImageFile,
 };
