@@ -25,16 +25,18 @@ function saveFollow(req, res) {
   });
 }
 
-/* function deleteFollow(req, res) {
-  let userId = req.user.sub;
-  let followId = req.params.id;
+// Method that lets you stop following a user
+function deleteFollow(req, res) {
+  const userId = req.user.sub;
+  const followId = req.params.id;
 
-  Follow.find({'user': userId, 'followed': followId}).remove(err => {
-    if (err) return res.status(500).send({message: 'Error al dejar de seguir'});
+  // Find the records that have as user: userId and that have followed: followId and are deleted
+  Follow.find({ 'user': userId, 'followed': followId }).remove(err => {
+    if (err) return res.status(500).send({ message: 'Failed to stop following' });
 
-    return res.status(200).send({message: 'El follow se ha eliminado'});
+    return res.status(200).send({ message: 'The follow has been removed' });
   });
-} */
+}
 
 // Lista los usuarios que seguimos de forma paginada
 /* function getFollowingUsers(req, res) {
@@ -151,8 +153,8 @@ async function followUserIds(user_id) {
 
 module.exports = {
   saveFollow,
-  /* deleteFollow,
-  getFollowingUsers,
+  deleteFollow,
+  /* getFollowingUsers,
   getFollowedUsers,
   getMyFollows */
 };
