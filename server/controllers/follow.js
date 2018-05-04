@@ -38,38 +38,41 @@ function deleteFollow(req, res) {
   });
 }
 
-// Lista los usuarios que seguimos de forma paginada
-/* function getFollowingUsers(req, res) {
-  let userId = req.user.sub;
+// List the users that we follow in a paged form
+function getFollowingUsers(req, res) {
+  let userId = req.user.sub; // Get the userId of the logged in user
   let page = 1;
-  let itemsPerPage = 4;
+  let itemsPerPage = 4; // List 4 users per page
 
   if (req.params.id && req.params.page) {
     userId = req.params.id;
   }
 
+  // If we get page by url
   if (req.params.page) {
     page = req.params.page;
   } else {
     page = req.params.id;
-  } */
+  }
 
-/* Follow.find({user: userId}).populate({path: 'followed'}).paginate(page, itemsPerPage, (err, follows, total) => {
-    if (err) return res.status(505).send({message: 'Error en la petición'});
+  // Find all the follows where the user is following another user
+  // Populates the data indicating the field to be replaced and performs paging
+  Follow.find({ user: userId }).populate({ path: 'followed' }).paginate(page, itemsPerPage, (err, follows, total) => {
+    if (err) return res.status(505).send({ message: 'Error in the request' });
 
-    if (!follows) return res.status(404).send({message: 'No estas siguiendo a ningun usuario'});
+    if (!follows) return res.status(404).send({ message: 'You are not following any user' });
 
-    followUserIds(req.user.sub).then((value) => { */
-      /* return res.status(200).send({
+    // followUserIds(req.user.sub).then((value) => {
+      return res.status(200).send({
         follows,
-        users_following: value.following,
-        users_follow_me: value.followed,
+        // users_following: value.following,
+        // users_follow_me: value.followed,
         total: total,
-        pages: Math.ceil(total / itemsPerPage)
+        pages: Math.ceil(total / itemsPerPage), // Calculate the number of pages to present data
       });
-    });
+    // });
   });
-} */
+}
 
 // Lista los usuarios que nos siguen de forma paginada
 /* function getFollowedUsers(req, res) {
@@ -120,9 +123,9 @@ function deleteFollow(req, res) {
 
     return res.status(200).send({follows});
   });
-}
+} */
 
-async function followUserIds(user_id) {
+/* async function followUserIds(user_id) {
   let following = await Follow.find({'user': user_id}).select({'_id': 0, '__v': 0, 'user': 0}).exec((err, follows) => {
     return follows;
   });
@@ -147,14 +150,14 @@ async function followUserIds(user_id) {
 
   return {
     following: following_clean,
-    followed: followed_clean
-  }
+    followed: followed_clean,
+  };
 } */
 
 module.exports = {
   saveFollow,
   deleteFollow,
-  /* getFollowingUsers,
-  getFollowedUsers,
+  getFollowingUsers,
+  /* getFollowedUsers,
   getMyFollows */
 };
