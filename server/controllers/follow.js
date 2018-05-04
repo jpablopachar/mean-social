@@ -91,12 +91,12 @@ function getFollowedUsers(req, res) {
     page = req.params.id;
   }
 
-  // We search in all the following fields the artibuto of a userId
+  // We find in all the following fields the artibuto of a userId
   // we populate the data and present it in a paged form
   Follow.find({ followed: userId }).populate('user').paginate(page, itemsPerPage, (err, follows, total) => {
-    if (err) return res.status(505).send({ message: 'Error en la petición' });
+    if (err) return res.status(505).send({ message: 'Error in the request' });
 
-    if (!follows) return res.status(404).send({ message: 'No te sigue ningun usuario' });
+    if (!follows) return res.status(404).send({ message: 'No user follows you' });
 
     // followUserIds(req.user.sub).then((value) => {
       return res.status(200).send({
@@ -110,23 +110,24 @@ function getFollowedUsers(req, res) {
   });
 }
 
-// Lista los usuarios que seguimos o de los usuarios que nos siguen  de forma no paginada
-/* function getMyFollows(req, res) {
-  let userId = req.user.sub;
-  let find = Follow.find({user: userId});
+// List the users that we follow or the users who follow us in a non-paged form
+function getMyFollows(req, res) {
+  const userId = req.user.sub; // Id of the logged in user
+  let find = Follow.find({ user: userId }); // Users that we follow
 
   if (req.params.followed) {
-    find = Follow.find({followed: userId});
+    find = Follow.find({ followed: userId }); // Users that follow me
   }
 
+  // Find and populate the user properties and followed
   find.populate('user followed').exec((err, follows) => {
-    if (err) return res.status(505).send({message: 'Error en la petición'});
+    if (err) return res.status(505).send({ message: 'Error in the request' });
 
-    if (!follows) return res.status(404).send({message: 'No estas siguiendo a ningun usuario'});
+    if (!follows) return res.status(404).send({ message: 'You are not following any user' });
 
-    return res.status(200).send({follows});
+    return res.status(200).send({ follows });
   });
-} */
+}
 
 /* async function followUserIds(user_id) {
   let following = await Follow.find({'user': user_id}).select({'_id': 0, '__v': 0, 'user': 0}).exec((err, follows) => {
@@ -162,5 +163,5 @@ module.exports = {
   deleteFollow,
   getFollowingUsers,
   getFollowedUsers,
-  /* getMyFollows */
+  getMyFollows,
 };
