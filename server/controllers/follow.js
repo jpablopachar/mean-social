@@ -74,12 +74,13 @@ function getFollowingUsers(req, res) {
   });
 }
 
-// Lista los usuarios que nos siguen de forma paginada
-/* function getFollowedUsers(req, res) {
-  let userId = req.user.sub;
+// List the users that follow us in a paged form
+function getFollowedUsers(req, res) {
+  let userId = req.user.sub; // Id of the logged in user
   let page = 1;
-  let itemsPerPage = 4;
+  const itemsPerPage = 4;
 
+  // If we get the parameters by url
   if (req.params.id && req.params.page) {
     userId = req.params.id;
   }
@@ -90,22 +91,24 @@ function getFollowingUsers(req, res) {
     page = req.params.id;
   }
 
-  Follow.find({followed: userId}).populate('user').paginate(page, itemsPerPage, (err, follows, total) => {
-    if (err) return res.status(505).send({message: 'Error en la petición'});
+  // We search in all the following fields the artibuto of a userId
+  // we populate the data and present it in a paged form
+  Follow.find({ followed: userId }).populate('user').paginate(page, itemsPerPage, (err, follows, total) => {
+    if (err) return res.status(505).send({ message: 'Error en la petición' });
 
-    if (!follows) return res.status(404).send({message: 'No te sigue ningun usuario'});
+    if (!follows) return res.status(404).send({ message: 'No te sigue ningun usuario' });
 
-    followUserIds(req.user.sub).then((value) => {
+    // followUserIds(req.user.sub).then((value) => {
       return res.status(200).send({
         follows,
-        users_following: value.following,
-        users_follow_me: value.followed,
+        // users_following: value.following,
+        // users_follow_me: value.followed,
         total: total,
-        pages: Math.ceil(total / itemsPerPage)
+        pages: Math.ceil(total / itemsPerPage), // Calculate the number of pages to present data
       });
-    });
+    // });
   });
-} */
+}
 
 // Lista los usuarios que seguimos o de los usuarios que nos siguen  de forma no paginada
 /* function getMyFollows(req, res) {
@@ -158,6 +161,6 @@ module.exports = {
   saveFollow,
   deleteFollow,
   getFollowingUsers,
-  /* getFollowedUsers,
-  getMyFollows */
+  getFollowedUsers,
+  /* getMyFollows */
 };
