@@ -1,5 +1,3 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema; // Defines a database model
 
@@ -8,7 +6,7 @@ const PublicationSchema = new Schema({
   text: String,
   file: String,
   created_at: String,
-  user: {type: Schema.ObjectId, ref: 'User'}
+  user: { type: Schema.ObjectId, ref: 'User' },
 });
 
 // Export the publication model
