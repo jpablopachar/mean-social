@@ -27,19 +27,19 @@ function savePublication(req, res) {
   });
 }
 
-
-/* function getPublication(req, res) {
+// Method that returns a publication
+function getPublication(req, res) {
   const publicationId = req.params.id;
 
-  // lo
+  // Search for publications that have publicationId
   Publication.findById(publicationId, (err, publication) => {
-    if (err) return res.status(500).send({ message: 'Error en la petición' });
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    if (!publication) return res.status(404).send({ message: 'No hay publicaciones' });
+    if (!publication) return res.status(404).send({ message: 'No publications' });
 
     return res.status(200).send({ publication });
   });
-} */
+}
 
 // Method that returns the publications of the users that I follow
 function getPublications(req, res) {
@@ -52,7 +52,7 @@ function getPublications(req, res) {
 
   // Find all the users that we follow and populate with the property followed
   Follow.find({ user: req.user.sub }).populate('followed').exec((err, follows) => {
-    if (err) return res.status(500).send({ message: 'Error en la petición' });
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
     const followsClean = [];
 
@@ -175,7 +175,7 @@ function getPublications(req, res) {
 
 module.exports = {
   savePublication,
-  // getPublication,
+  getPublication,
   getPublications,
   // getPublicationsUser,
   // deletePublication,
