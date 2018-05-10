@@ -121,46 +121,48 @@ function deletePublication(req, res) {
   });
 }
 
-/* function uploadImage(req, res) {
-  let publicationId = req.params.id;
+// Method to delete a file uploaded
+function removeFilesOfUploads(res, filePath, message) {
+  fs.unlink(filePath, (err) => {
+    return res.status(200).send({ message: message });
+  });
+}
+
+// Method to upload images to the publication
+function uploadImage(req, res) {
+  const publicationId = req.params.id;
 
   if (req.files) {
-    let file_path = req.files.image.path;
-    // console.log(file_path);
-    let file_split = file_path.split('/');
-    // console.log(file_split);
-    let file_name = file_split[2];
-    // console.log(file_name);
-    let ext_split = file_name.split('\.');
-    // console.log(ext_split);
-    let file_ext = ext_split[1];
-    // console.log(file_ext);
+    const filePath = req.files.image.path;
+    const fileSplit = filePath.split('/');
+    const fileName = fileSplit[2];
+    const extSplit = fileName.split('\.');
+    const fileExt = extSplit[1];
 
-    if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
-      Publication.findOne({'user': req.user.sub, '_id': publicationId}).exec((err, publication) => {
+    if (fileExt === 'png' || fileExt === 'jpg' || fileExt === 'jpeg' || fileExt === 'gif') {
+
+      // Find the user's publication based on publicationId
+      Publication.findOne({ 'user': req.user.sub, '_id': publicationId }).exec((err, publication) => {
         if (publication) {
-          Publication.findByIdAndUpdate(publicationId, {file: file_name}, {new: true}, (err, publicationUpdated) => {
-            if (err) return res.status(505).send({message: 'Error en la petición'});
+          // Find the publication and update it
+          Publication.findByIdAndUpdate(publicationId, { file: fileName }, { new: true }, (err, publicationUpdated) => {
+            if (err) return res.status(505).send({ message: 'Error in the request' });
 
-            if (!publicationUpdated) return res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+            if (!publicationUpdated) return res.status(404).send({ message: 'The user could not be updated' });
 
-            // return res.status(200).send({
-            //   image: file_name,
-            //   publication: publicationUpdated
-            // });
-            return res.status(200).send({publicationUpdated});
+            return res.status(200).send({ publicationUpdated });
           });
         } else {
-          return removeFilesOfUploads(res, file_path, 'No tienes permisos para actualizar esta publicación');
+          return removeFilesOfUploads(res, filePath, 'You do not have permission to update this publication');
         }
       });
     } else {
-      return removeFilesOfUploads(res, file_path, 'Extensión no válida');
+      return removeFilesOfUploads(res, filePath, 'Invalid extension');
     }
   } else {
-    res.status(200).send({message: 'No se ha subido ninguna imagen'});
+    res.status(200).send({ message: 'No image has been uploaded' });
   }
-} */
+}
 
 /* function getImageFile(req, res) {
   let imageFile = req.params.imageFile;
@@ -181,6 +183,6 @@ module.exports = {
   getPublications,
   // getPublicationsUser,
   deletePublication,
-  // uploadImage,
+  uploadImage,
   // getImageFile
 };
