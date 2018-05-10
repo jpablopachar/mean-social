@@ -5,7 +5,7 @@ const path = require('path');
 
 const User = require('../models/user');
 const Follow = require('../models/follow');
-/* const Publication = require('../models/publication'); */
+const Publication = require('../models/publication');
 const jwt = require('../services/jwt');
 
 // Method for registering a new user
@@ -202,16 +202,17 @@ async function getCountFollow(userId) {
     return handleError(err);
   });
 
-  /* let publications = await Publication.count({'user': userId}).exec((err, count) => {
-    if (err) return handleError(err);
-
+  // Count the posts the user has made
+  const publications = await Publication.count({ 'user': userId }).exec().then((count) => {
     return count;
-  }); */
+  }).catch((err) => {
+    return handleError(err);
+  });
 
   return {
     following: following,
     followed: followed,
-    // publications: publications,
+    publications: publications,
   };
 }
 
