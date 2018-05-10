@@ -109,15 +109,17 @@ function getPublications(req, res) {
   });
 } */
 
-/* function deletePublication(req, res) {
-  let publicationId = req.params.id;
+// Method to delete a publication
+function deletePublication(req, res) {
+  const publicationId = req.params.id;
 
-  Publication.find({'user': req.user.sub, '_id': publicationId}).remove(err => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+  // Find a publication based on your Id and remove it
+  Publication.find({ 'user': req.user.sub, '_id': publicationId }).remove(err => {
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    return res.status(200).send({message: 'Publicación eliminada correctamente'});
+    return res.status(200).send({ message: 'Publication deleted successfully' });
   });
-} */
+}
 
 /* function uploadImage(req, res) {
   let publicationId = req.params.id;
@@ -178,7 +180,7 @@ module.exports = {
   getPublication,
   getPublications,
   // getPublicationsUser,
-  // deletePublication,
+  deletePublication,
   // uploadImage,
   // getImageFile
 };
