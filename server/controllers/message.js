@@ -40,6 +40,7 @@ function getReceivedMessages(req, res) {
 
   // Look for the messages we receive and populate with the data of the user who sent the message
   // It is ordered in descending order and we present them in a paged form
+  // We populate the data that we want
   Message.find({ receiver: userId }).populate('emitter', 'name surname image nick _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, total) => {
     if (err) return res.status(500).send({ message: 'Error in the request' });
 
@@ -53,28 +54,31 @@ function getReceivedMessages(req, res) {
   });
 }
 
-/* function getEmittMessages(req, res) {
-  console.log('Estoy aqui');
-  let userId = req.user.sub;
+// Method to list the messages we send
+function getEmmitMessages(req, res) {
+  const userId = req.user.sub;
   let page = 1;
-  let itemsPerPage = 4;
+  const itemsPerPage = 4;
 
   if (req.params.page) {
     page = req.params.page;
   }
 
-  Message.find({emitter: userId}).populate('emitter receiver', 'name surname image nick _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, total) => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+  // Search the messages we send and complete with the data of the user who sent the message
+  // It is ordered in descending order and we present them in a paged page
+  // We complete the data we want
+  Message.find({ emitter: userId }).populate('emitter receiver', 'name surname image nick _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, total) => {
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    if (!messages) return res.status(404).send({message: 'No hay mensajes'});
+    if (!messages) return res.status(404).send({ message: 'No messages' });
 
     return res.status(200).send({
       messages,
       total,
-      pages: Math.ceil(total / itemsPerPage)
+      pages: Math.ceil(total / itemsPerPage),
     });
   });
-} */
+}
 
 /* function getUnviewedMessages(req, res) {
   let userId = req.user.sub;
@@ -99,7 +103,7 @@ function getReceivedMessages(req, res) {
 module.exports = {
   saveMessage,
   getReceivedMessages,
-  // getEmittMessages,
+  getEmmitMessages,
   // getUnviewedMessages,
   // setViewedMessages,
 };
