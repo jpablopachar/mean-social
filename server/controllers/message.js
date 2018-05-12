@@ -28,27 +28,30 @@ function saveMessage(req, res) {
   });
 }
 
-/* function getReceivedMessages(req, res) {
-  let userId = req.user.sub;
+// The save message function is implemented...
+function getReceivedMessages(req, res) {
+  const userId = req.user.sub;
   let page = 1;
-  let itemsPerPage = 4;
+  const itemsPerPage = 4;
 
   if (req.params.page) {
     page = req.params.page;
   }
 
-  Message.find({receiver: userId}).populate('emitter', 'name surname image nick _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, total) => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+  // Look for the messages we receive and populate with the data of the user who sent the message
+  // It is ordered in descending order and we present them in a paged form
+  Message.find({ receiver: userId }).populate('emitter', 'name surname image nick _id').sort('-created_at').paginate(page, itemsPerPage, (err, messages, total) => {
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    if (!messages) return res.status(404).send({message: 'No hay mensajes'});
+    if (!messages) return res.status(404).send({ message: 'No messages' });
 
     return res.status(200).send({
       messages,
       total: total,
-      pages: Math.ceil(total / itemsPerPage)
+      pages: Math.ceil(total / itemsPerPage),
     });
   });
-} */
+}
 
 /* function getEmittMessages(req, res) {
   console.log('Estoy aqui');
@@ -95,7 +98,7 @@ function saveMessage(req, res) {
 
 module.exports = {
   saveMessage,
-  // getReceivedMessages,
+  getReceivedMessages,
   // getEmittMessages,
   // getUnviewedMessages,
   // setViewedMessages,
