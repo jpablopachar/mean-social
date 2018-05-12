@@ -80,30 +80,34 @@ function getEmmitMessages(req, res) {
   });
 }
 
-/* function getUnviewedMessages(req, res) {
-  let userId = req.user.sub;
+// Method to count unread messages
+function getUnviewedMessages(req, res) {
+  const userId = req.user.sub;
 
-  Message.count({receiver: userId, viewed: 'false'}).exec((err, count) => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+  // Count the messages we have received
+  Message.count({ receiver: userId, viewed: 'false' }).exec((err, count) => {
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    return res.status(200).send({'unviewed': count});
+    return res.status(200).send({ 'unviewed': count });
   });
-} */
+}
 
-/* function setViewedMessages(req, res) {
-  let userId = req.user.sub;
+// Methods to mark messages as read
+function setViewedMessages(req, res) {
+  const userId = req.user.sub;
 
-  Message.update({receiver: userId, viewed: 'false'}, {viewed: 'true'}, {'multi': true}, (err, messagesUpdated) => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+  // Update the message object by changing the viewd property to true
+  Message.update({ receiver: userId, viewed: 'false' }, { viewed: 'true' }, { 'multi': true }, (err, messagesUpdated) => {
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    return res.status(200).send({messages: messagesUpdated});
+    return res.status(200).send({ messages: messagesUpdated });
   });
-} */
+}
 
 module.exports = {
   saveMessage,
   getReceivedMessages,
   getEmmitMessages,
-  // getUnviewedMessages,
-  // setViewedMessages,
+  getUnviewedMessages,
+  setViewedMessages,
 };
