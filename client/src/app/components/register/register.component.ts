@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {User} from '../../models/user';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [UserService]
 })
 export class RegisterComponent implements OnInit {
   public title: string;
   public user: User;
+  public status: string;
 
-  constructor(private _route: ActivatedRoute, private _router: Router) {
+  constructor(private _route: ActivatedRoute, private _router: Router, private _userService: UserService) {
     this.title = 'Sign up';
     this.user = new User('', '', '', '', '', '', 'ROLE_USER', '');
   }
@@ -20,4 +23,16 @@ export class RegisterComponent implements OnInit {
     console.log('Component app-register loaded!');
   }
 
+  onSubmit(form) {
+    this._userService.register(this.user).subscribe(response => {
+      if (response.user && response.user._id) {
+        this.status = 'success';
+        form.reset(); // Reset the form
+      } else {
+        this.status = 'error';
+      }
+    }, error => {
+      console.log(<any>error);
+    });
+  }
 }
