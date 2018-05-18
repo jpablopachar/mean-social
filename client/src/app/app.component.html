@@ -1,13 +1,31 @@
 <div class="navigation col-lg-12">
-  <div class="navbar navbar-default">
+  <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <div class="navbar-header"><a href="#" class="navbar-brand">{{ title }}</a></div>
-      <ul class="nav navbar-nav">
-        <li><a href="#"><span class="glyphicon glyphicon-home"></span>Home</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-th-list"></span>Timeline</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span>People</a></li>
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">{{ title }}</a>
+      </div>
+      <ul class="nav navbar-nav" *ngIf="identity">
+        <li><a [routerLink]="['/home']" [routerLinkActive]="['active']">Home <span class="glyphicon glyphicon-home"></span></a></li>
+        <li><a [routerLink]="['/timeline']" [routerLinkActive]="['active']">Timeline <span class="glyphicon glyphicon-th-list"></span></a></li>
+        <li><a [routerLink]="['/gente']" [routerLinkActive]="['active']">People <span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a [routerLink]="['/mensajes']" [routerLinkActive]="['active']">Messages <span class="glyphicon glyphicon-envelope"></span></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" *ngIf="!identity">
+        <li><a [routerLink]="['/login']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+        <li><a [routerLink]="['/registro']" [routerLinkActive]="['active']"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" *ngIf="identity">
+        <li class="avatar"><img src="{{ url + 'get-image-user/' + identity.image }}" *ngIf="identity && identity.image"></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{identity.name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a [routerLink]="['/perfil', identity._id]"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
+            <li><a [routerLink]="['/mis-datos']"><span class="glyphicon glyphicon-cog"></span> My data</a></li>
+            <li><a href="#" class="pointer" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
-  </div>
+  </nav>
 </div>
 <router-outlet></router-outlet>

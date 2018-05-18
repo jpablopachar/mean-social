@@ -25,4 +25,51 @@ export class UserService {
     return this._http.post(this.url + 'register', params, { headers: headers });
   }
 
+  // Sign up a user
+  signUp(user, getToken = null): Observable<any> {
+    if (getToken != null) {
+      user.getToken = getToken;
+    }
+
+    const params = JSON.stringify(user);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.post(this.url + 'login', params, { headers: headers });
+  }
+
+  // Convert to a JSON object
+  getIdentity() {
+    const identity = JSON.parse(localStorage.getItem('identity'));
+
+    if (identity !== 'undefined') {
+      this.identity = identity;
+    } else {
+      this.identity = null;
+    }
+
+    return this.identity;
+  }
+
+  // Returns a token to identify a user
+  getToken() {
+    const token = localStorage.getItem('token');
+
+    if (token !== 'undefined') {
+      this.token = token;
+    } else {
+      this.token = null;
+    }
+
+    return this.token;
+  }
+
+  getCounters(userId = null): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
+
+    if (userId !== null) {
+      return this._http.get(this.url + 'counters/' + userId, { headers: headers });
+    } else {
+      return this._http.get(this.url + 'counters/', { headers: headers });
+    }
+  }
 }
