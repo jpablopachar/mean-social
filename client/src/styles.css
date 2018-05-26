@@ -69,3 +69,8 @@
 .user-image-for-edit img {
   height: 60px;
 }
+
+.get-image img {
+  width: 200px;
+  height: 200px;
+}
