@@ -74,3 +74,42 @@
   width: 200px;
   height: 200px;
 }
+
+/* People */
+.people {
+  min-height: 500px;
+}
+
+.item-user .image-user, .item-publication .image-user {
+  width: 75px;
+  height: 75px;
+  border-radius: 100px;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.item-user .image-user img, .item-publication .image-user img {
+  width: 80px;
+}
+
+.item-user .user-name, .item-publication .user-name {
+  margin-top: 10px;
+}
+
+.item-user .user-name .nickname {
+  color: #969393;
+}
+
+.item-user .user-name .name-surname a {
+  color: #555;
+  font-weight: bold;
+}
+
+.item-user .user-name .name-surname a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.avatar-default {
+  width: 100% !important;
+}

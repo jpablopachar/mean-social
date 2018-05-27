@@ -89,6 +89,20 @@ export class UserService {
     const params = JSON.stringify(user);
     const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
 
-    return this._http.put(this.url + 'update-user/' + user._id, params, {headers: headers});
+    return this._http.put(this.url + 'update-user/' + user._id, params, { headers: headers });
+  }
+
+  // Returns users in paged form
+  getUsers(page = null): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
+
+    return this._http.get(this.url + 'users/' + page, { headers: headers });
+  }
+
+  // Returns a user
+  getUser(id): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
+
+    return this._http.get(this.url + 'user/' + id, { headers: headers });
   }
 }

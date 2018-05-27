@@ -21,7 +21,7 @@ function saveUser(req, res) {
     user.nickname = params.nickname;
     user.email = params.email;
     user.role = 'ROLE_USER';
-    user.image = 'null';
+    user.image = null;
 
     // Control duplicate users
     User.find({ $or: [{ email: user.email.toLowerCase() }, { nickname: user.nickname.toLowerCase() }] }).exec((err, users) => {
