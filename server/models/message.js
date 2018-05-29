@@ -5,7 +5,7 @@ const Schema = mongoose.Schema; // Defines a database model
 const MessageSchema = new Schema({
   text: String,
   viewed: String,
-  created_at: String,
+  createdAt: String,
   emitter: { type: Schema.ObjectId, ref: 'User' },
   receiver: { type: Schema.ObjectId, ref: 'User' },
 });

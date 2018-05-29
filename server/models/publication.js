@@ -5,7 +5,7 @@ const Schema = mongoose.Schema; // Defines a database model
 const PublicationSchema = new Schema({
   text: String,
   file: String,
-  created_at: String,
+  createdAt: String,
   user: { type: Schema.ObjectId, ref: 'User' },
 });
 

@@ -16,7 +16,7 @@ function savePublication(req, res) {
   publication.text = params.text;
   publication.file = 'null';
   publication.user = req.user.sub; // Save the id of the user who creates the publication
-  publication.created_at = moment().unix(); // We assign the creation date
+  publication.createdAt = moment().unix(); // We assign the creation date
 
   publication.save((err, publicationStored) => {
     if (err) return res.status(500).send({ message: 'Error saving the publication' });
@@ -65,7 +65,7 @@ function getPublications(req, res) {
     // Search for all publications whose user is in a sorted list
     // from the oldest to the newest and we populate with the user object
     // and returns us in a paged form
-    Publication.find({ user: { '$in': followsClean } }).sort('-created_at').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
+    Publication.find({ user: { '$in': followsClean } }).sort('-createdAt').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
       if (err) return res.status(500).send({ message: 'Error returning publications' });
 
       if (!publications) return res.status(404).send({ message: 'No publications' });
@@ -73,9 +73,9 @@ function getPublications(req, res) {
       return res.status(200).send({
         publications,
         totalItems: total,
-        page: page,
+        page,
         pages: Math.ceil(total / itemsPerPage),
-        itemsPerPage: itemsPerPage,
+        itemsPerPage,
       });
     });
   });
@@ -94,7 +94,7 @@ function getPublications(req, res) {
     user = req.params.user;
   }
 
-  Publication.find({user: user}).sort('-created_at').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
+  Publication.find({user: user}).sort('-createdAt').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
     if (err) return res.status(500).send({message: 'Error en la petición'});
 
     if(!publications) return res.status(404).send({message: 'No hay publicaciones'});

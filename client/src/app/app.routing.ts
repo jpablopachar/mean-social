@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserComponent } from './components/user/user.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
   {path: 'my-data', component: UserEditComponent},
   {path: 'people', component: UserComponent},
   {path: 'people/:page', component: UserComponent},
+  {path: 'timeline', component: TimelineComponent},
 ];
 
 export const appRoutingProviders: any[] = [];

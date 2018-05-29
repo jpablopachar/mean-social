@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MomentModule } from 'angular2-moment';
 
 import { routing, appRoutingProviders } from './app.routing';
 
@@ -12,6 +13,8 @@ import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserComponent } from './components/user/user.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { PublicationsComponent } from './components/publications/publications.component';
 
 
 @NgModule({
@@ -22,12 +25,15 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     HomeComponent,
     UserEditComponent,
     UserComponent,
-    SidebarComponent
+    SidebarComponent,
+    TimelineComponent,
+    PublicationsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    MomentModule,
     routing
   ],
   providers: [

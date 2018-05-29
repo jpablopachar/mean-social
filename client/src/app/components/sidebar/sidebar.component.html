@@ -1,3 +1,45 @@
-<p>
-  sidebar works!
-</p>
+<div class="col-lg-4 sidebar-32">
+  <h1 class="h1-strong">Hello, {{ identity.name }}</h1>
+</div>
+<div id="user-card" class="col-lg-4 panel panel-default pull-left">
+  <div class="avatar pull-left">
+    <img src="{{ url + 'get-image-user/' + identity.image }}" *ngIf="identity.name">
+    <img src="../../../assets/user.png" *ngIf="!identity.name">
+  </div>
+  <div class="name-surname pull-left">
+    <a [routerLink]="['/perfil', identity._id]" class="username">{{ identity.name + ' ' + identity.surname }}</a>
+    <p class="nickname">{{ identity.nickname }}</p>
+    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="stats" *ngIf="stats">
+    <div class="following-data">
+      <a [routerLink]="['/siguiendo', identity._id, 1]"><span class="label-stats">Following</span><span class="number-stats"> {{ stats.following }}</span></a>
+    </div>
+    <div class="following-data">
+      <a [routerLink]="['/seguidores', identity._id, 1]"><span class="label-stats">Followers</span><span class="number-stats"> {{ stats.followed }}</span></a>
+    </div>
+    <div class="following-data">
+      <a [routerLink]="['/perfil', identity._id, 1]"><span class="label-stats">Publications</span><span class="number-stats"> {{ stats.publications }}</span></a>
+    </div>
+  </div>
+</div>
+<!-- Publications form -->
+<div id="new-publication" class="col-lg-4 pull-left panel panel-default">
+  <div class="alert alert-success" *ngIf="status == 'success'">Publication sent correctly </div>
+  <div class="alert alert-success" *ngIf="status == 'error'">Error sending the publication</div>
+  <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm, $event);" class="col-lg-10">
+    <p>
+      <label>What are you thinking today?</label>
+      <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required title="Publication description"></textarea>
+      <span *ngIf="!text.valid && text.touched">The text of the publication is obligatory</span>
+    </p>
+    <p>
+      <label>Upload your photo</label>
+      <input type="file" placeholder="Upload image" (change)="fileChangeEvent($event)">
+    </p>
+    <input type="submit" value="Submit" class="btn btn-success" [disabled]="!newPubForm.form.valid">
+  </form>
+</div>
+
+
