@@ -164,18 +164,18 @@ function uploadImage(req, res) {
   }
 }
 
-/* function getImageFile(req, res) {
-  let imageFile = req.params.imageFile;
-  let path_file = './uploads/publications/' + imageFile;
+function getImageFile(req, res) {
+  const imageFile = req.params.imageFile;
+  const pathFile = './uploads/publications/' + imageFile;
 
-  fs.exists(path_file, (exists) => {
+  fs.exists(pathFile, (exists) => {
     if (exists) {
-      res.sendFile(path.resolve(path_file));
+      res.sendFile(path.resolve(pathFile));
     } else {
-      res.status(200).send({message: 'No existe la imagen'});
+      res.status(200).send({ message: 'There is no image' });
     }
   });
-} */
+}
 
 module.exports = {
   savePublication,
@@ -184,5 +184,5 @@ module.exports = {
   getPublicationsUser,
   deletePublication,
   uploadImage,
-  // getImageFile
+  getImageFile,
 };

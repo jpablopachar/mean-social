@@ -20,10 +20,10 @@
     </div>
     <div class="stats pull-left" *ngIf="stats">
       <div class="following-data">
-        <a [routerLink]="['/siguiendo', user._id, 1]"><span class="label-stats">Following</span><span class="number-stats"> {{ stats.following }}</span></a>
+        <a [routerLink]="['/following', user._id, 1]"><span class="label-stats">Following</span><span class="number-stats"> {{ stats.following }}</span></a>
       </div>
       <div class="following-data">
-        <a [routerLink]="['/seguidores', user._id, 1]"><span class="label-stats">Followers</span><span class="number-stats"> {{ stats.followed }}</span></a>
+        <a [routerLink]="['/followed', user._id, 1]"><span class="label-stats">Followers</span><span class="number-stats"> {{ stats.followed }}</span></a>
       </div>
       <div class="following-data">
         <a [routerLink]="['/profile', identity._id, 1]"><span class="label-stats">Publications</span><span class="number-stats"> {{ stats.publications }}</span></a>

@@ -14,10 +14,10 @@
   <div class="clearfix"></div>
   <div class="stats" *ngIf="stats">
     <div class="following-data">
-      <a [routerLink]="['/siguiendo', identity._id, 1]"><span class="label-stats">Following</span><span class="number-stats"> {{ stats.following }}</span></a>
+      <a [routerLink]="['/following', identity._id, 1]"><span class="label-stats">Following</span><span class="number-stats"> {{ stats.following }}</span></a>
     </div>
     <div class="following-data">
-      <a [routerLink]="['/seguidores', identity._id, 1]"><span class="label-stats">Followers</span><span class="number-stats"> {{ stats.followed }}</span></a>
+      <a [routerLink]="['/followed', identity._id, 1]"><span class="label-stats">Followers</span><span class="number-stats"> {{ stats.followed }}</span></a>
     </div>
     <div class="following-data">
       <a [routerLink]="['/profile', identity._id, 1]"><span class="label-stats">Publications</span><span class="number-stats"> {{ stats.publications }}</span></a>

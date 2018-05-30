@@ -43,10 +43,9 @@ export class SidebarComponent implements OnInit {
     console.log('Component app-sidebar loaded');
   }
 
-  onSubmit(form) {
+  onSubmit(form, event) {
     this._publicationService.addPublication(this.token, this.publication).subscribe(response => {
       if (response.publication) {
-        // this.publication = response.publication;
         // Subir imagen
         if (this.filesToUpload && this.filesToUpload.length) {
           this._uploadService.makeFileRequest(this.url + 'upload-image-pub/' +
@@ -56,14 +55,14 @@ export class SidebarComponent implements OnInit {
 
             form.reset();
             this._router.navigate(['/timeline']);
-            this.sended.emit({send: 'true'});
+            this.sended.emit({ send: 'true' });
           });
         } else {
           this.status = 'success';
 
           form.reset();
           this._router.navigate(['/timeline']);
-          this.sended.emit({send: 'true'});
+          this.sended.emit({ send: 'true' });
         }
       } else {
         this.status = 'error';
@@ -82,10 +81,4 @@ export class SidebarComponent implements OnInit {
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
-
-  sendPublication(event) {
-    console.log(event);
-    this.sended.emit({ send: 'true' });
-  }
-
 }

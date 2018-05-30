@@ -129,8 +129,8 @@ async function followUserIds(userId) {
     // Process following ids
     const followingClean = [];
 
-    following.forEach((follow) => {
-      followingClean.push(follow.followed);
+    following.forEach((following) => {
+      followingClean.push(following.followed);
     });
 
     return followingClean;
@@ -143,8 +143,8 @@ async function followUserIds(userId) {
     // Process followed ids
     const followedClean = [];
 
-    followed.forEach((follow) => {
-      followedClean.push(follow.user);
+    followed.forEach((followed) => {
+      followedClean.push(followed.user);
     });
 
     return followedClean;
@@ -239,7 +239,7 @@ function updateUser(req, res) {
     return res.status(500).send({ message: 'You do not have permission to update user data' });
   }
 
-  User.find({ $or: [{ email: update.email.toLowerCase() }, { nick: update.nick.toLowerCase() }] }).exec((err, users) => {
+  User.find({ $or: [{ email: update.email.toLowerCase() }, { nickname: update.nickname.toLowerCase() }] }).exec((err, users) => {
     let userIsset = false;
 
     users.forEach((user) => {
@@ -255,7 +255,7 @@ function updateUser(req, res) {
 
       userUpdated.password = undefined;
 
-      return res.status(200).send({ userUpdated });
+      return res.status(200).send({ user: userUpdated });
     });
   });
 }

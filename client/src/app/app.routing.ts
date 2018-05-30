@@ -8,6 +8,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserComponent } from './components/user/user.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { FollowingComponent } from './components/following/following.component';
+import { FollowedComponent } from './components/followed/followed.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,6 +21,9 @@ const appRoutes: Routes = [
   {path: 'people/:page', component: UserComponent},
   {path: 'timeline', component: TimelineComponent},
   {path: 'profile/:id', component: ProfileComponent},
+  {path: 'following/:id/:page', component: FollowingComponent},
+  {path: 'followed/:id/:page', component: FollowedComponent},
+  {path: '**', component: HomeComponent},
 ];
 
 export const appRoutingProviders: any[] = [];

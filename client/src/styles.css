@@ -203,6 +203,11 @@
   padding: 18px;
   padding-left: 8px;
 }
+/* Timeline */
+.image-Publication {
+  width: 400px;
+  height: 400px;
+}
 
 /* Profile */
 #data-profile {

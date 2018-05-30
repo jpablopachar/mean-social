@@ -80,8 +80,6 @@ export class TimelineComponent implements OnInit {
   }
 
   viewMore() {
-    // console.log(this.publications.length);
-    // console.log(this.total - this.itemsPerPage);
     this.page += 1;
 
     if (this.page === this.pages) {

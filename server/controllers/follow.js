@@ -1,10 +1,4 @@
-/* const bcrypt = require('bcrypt-nodejs');
-const fs = require('fs');
-const path = require('path'); */
-
-// const User = require('../models/user');
 const Follow = require('../models/follow');
-// const jwt = require('../services/jwt');
 
 // Method to follow a user
 function saveFollow(req, res) {
@@ -18,7 +12,6 @@ function saveFollow(req, res) {
   // Save the tracking data
   follow.save((err, followStored) => {
     if (err) return res.status(500).send({ message: 'Error saving tracking' });
-    console.log(followStored);
 
     if (!followStored) return res.status(404).send({ message: 'Tracking has not been saved' });
 
@@ -32,11 +25,42 @@ function deleteFollow(req, res) {
   const followId = req.params.id;
 
   // Find the records that have as user: userId and that have followed: followId and are deleted
-  Follow.find({ 'user': userId, 'followed': followId }).remove(err => {
+  Follow.find({ 'user': userId, 'followed': followId }).remove((err) => {
     if (err) return res.status(500).send({ message: 'Failed to stop following' });
 
     return res.status(200).send({ message: 'The follow has been removed' });
   });
+}
+
+async function followUserIds(userId) {
+  const following = await Follow.find({ user: userId}).select({ '_id': 0, '__v': 0, 'user': 0 }).exec().then((following) => {
+    const followsClean = [];
+
+    following.forEach((following) => {
+      followsClean.push(following.followed);
+    });
+
+    return followsClean;
+  }).catch((err) => {
+    return handleerror(err);
+  });
+
+  const followed = await Follow.find({ followed: userId }).select({ '_id': 0, '__v': 0, 'followed': 0 }).exec().then((followed) => {
+    const followsClean = [];
+
+    followed.forEach((followed) => {
+      followsClean.push(followed.user);
+    });
+
+    return followsClean;
+  }).catch((err) => {
+    return handleerror(err);
+  });
+
+  return {
+    following: following,
+    followed: followed,
+  };
 }
 
 // List the users that we follow in a paged form
@@ -63,15 +87,15 @@ function getFollowingUsers(req, res) {
 
     if (!follows) return res.status(404).send({ message: 'You are not following any user' });
 
-    // followUserIds(req.user.sub).then((value) => {
+    followUserIds(req.user.sub).then((value) => {
       return res.status(200).send({
         follows,
-        // users_following: value.following,
-        // users_follow_me: value.followed,
+        usersFollowing: value.following,
+        usersFollowMe: value.followed,
         total: total,
         pages: Math.ceil(total / itemsPerPage), // Calculate the number of pages to present data
       });
-    // });
+    });
   });
 }
 
@@ -92,22 +116,22 @@ function getFollowedUsers(req, res) {
     page = req.params.id;
   }
 
-  // We find in all the following fields the artibuto of a userId
+  // We find in all the following fields the attribute of a userId
   // we populate the data and present it in a paged form
   Follow.find({ followed: userId }).populate('user').paginate(page, itemsPerPage, (err, follows, total) => {
     if (err) return res.status(505).send({ message: 'Error in the request' });
 
     if (!follows) return res.status(404).send({ message: 'No user follows you' });
 
-    // followUserIds(req.user.sub).then((value) => {
+    followUserIds(req.user.sub).then((value) => {
       return res.status(200).send({
         follows,
-        // users_following: value.following,
-        // users_follow_me: value.followed,
+        usersFollowing: value.following,
+        usersFollowMe: value.followed,
         total: total,
         pages: Math.ceil(total / itemsPerPage), // Calculate the number of pages to present data
       });
-    // });
+    });
   });
 }
 
@@ -129,35 +153,6 @@ function getMyFollows(req, res) {
     return res.status(200).send({ follows });
   });
 }
-
-/* async function followUserIds(user_id) {
-  let following = await Follow.find({'user': user_id}).select({'_id': 0, '__v': 0, 'user': 0}).exec((err, follows) => {
-    return follows;
-  });
-
-  let followed = await Follow.find({'followed': user_id}).select({'_id': 0, '__v': 0, 'followed': 0}).exec((err, follows) => {
-    return follows;
-  }); */
-
-  // Procesar following ids
-  /* let following_clean = [];
-
-  following.forEach((follow) => {
-    following_clean.push(follow.followed);
-  });
-
-  // Procesar followed ids
-  let followed_clean = [];
-
-  followed.forEach((follow) => {
-    followed_clean.push(follow.user);
-  });
-
-  return {
-    following: following_clean,
-    followed: followed_clean,
-  };
-} */
 
 module.exports = {
   saveFollow,
