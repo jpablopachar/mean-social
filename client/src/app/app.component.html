@@ -19,7 +19,7 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{identity.name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a [routerLink]="['/perfil', identity._id]"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
+            <li><a [routerLink]="['/profile', identity._id]"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
             <li><a [routerLink]="['/my-data']"><span class="glyphicon glyphicon-cog"></span> My data</a></li>
             <li><a href="#" class="pointer" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>

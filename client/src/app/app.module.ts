@@ -15,6 +15,7 @@ import { UserComponent } from './components/user/user.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { PublicationsComponent } from './components/publications/publications.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { PublicationsComponent } from './components/publications/publications.co
     UserComponent,
     SidebarComponent,
     TimelineComponent,
-    PublicationsComponent
+    PublicationsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

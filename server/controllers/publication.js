@@ -81,9 +81,9 @@ function getPublications(req, res) {
   });
 }
 
-/* function getPublicationsUser(req, res) {
+function getPublicationsUser(req, res) {
   let page = 1;
-  let itemsPerPage = 4;
+  const itemsPerPage = 4;
   let user = req.user.sub;
 
   if (req.params.page) {
@@ -94,20 +94,20 @@ function getPublications(req, res) {
     user = req.params.user;
   }
 
-  Publication.find({user: user}).sort('-createdAt').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
-    if (err) return res.status(500).send({message: 'Error en la petición'});
+  Publication.find({ user: user }).sort('-createdAt').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
+    if (err) return res.status(500).send({ message: 'Error in the request' });
 
-    if(!publications) return res.status(404).send({message: 'No hay publicaciones'});
+    if (!publications) return res.status(404).send({ message: 'No publications' });
 
     return res.status(200).send({
       publications,
-      total_items: total,
+      totalItems: total,
       page: page,
       pages: Math.ceil(total / itemsPerPage),
-      items_per_page: itemsPerPage
+      itemsPerPage: itemsPerPage,
     });
   });
-} */
+}
 
 // Method to delete a publication
 function deletePublication(req, res) {
@@ -181,7 +181,7 @@ module.exports = {
   savePublication,
   getPublication,
   getPublications,
-  // getPublicationsUser,
+  getPublicationsUser,
   deletePublication,
   uploadImage,
   // getImageFile

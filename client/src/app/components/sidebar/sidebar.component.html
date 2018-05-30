@@ -7,7 +7,7 @@
     <img src="../../../assets/user.png" *ngIf="!identity.name">
   </div>
   <div class="name-surname pull-left">
-    <a [routerLink]="['/perfil', identity._id]" class="username">{{ identity.name + ' ' + identity.surname }}</a>
+    <a [routerLink]="['/profile', identity._id]" class="username">{{ identity.name + ' ' + identity.surname }}</a>
     <p class="nickname">{{ identity.nickname }}</p>
     <div class="clearfix"></div>
   </div>
@@ -20,7 +20,7 @@
       <a [routerLink]="['/seguidores', identity._id, 1]"><span class="label-stats">Followers</span><span class="number-stats"> {{ stats.followed }}</span></a>
     </div>
     <div class="following-data">
-      <a [routerLink]="['/perfil', identity._id, 1]"><span class="label-stats">Publications</span><span class="number-stats"> {{ stats.publications }}</span></a>
+      <a [routerLink]="['/profile', identity._id, 1]"><span class="label-stats">Publications</span><span class="number-stats"> {{ stats.publications }}</span></a>
     </div>
   </div>
 </div>

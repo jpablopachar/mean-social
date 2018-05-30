@@ -18,6 +18,7 @@ function saveFollow(req, res) {
   // Save the tracking data
   follow.save((err, followStored) => {
     if (err) return res.status(500).send({ message: 'Error saving tracking' });
+    console.log(followStored);
 
     if (!followStored) return res.status(404).send({ message: 'Tracking has not been saved' });
 
@@ -42,7 +43,7 @@ function deleteFollow(req, res) {
 function getFollowingUsers(req, res) {
   let userId = req.user.sub; // Get the userId of the logged in user
   let page = 1;
-  let itemsPerPage = 4; // List 4 users per page
+  const itemsPerPage = 4; // List 4 users per page
 
   if (req.params.id && req.params.page) {
     userId = req.params.id;

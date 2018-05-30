@@ -83,20 +83,20 @@ function loginUser(req, res) {
   });
 }
 
-// Función sincrona
+// Synchronous function
 async function followThisUser(identityUserId, userId) {
-  // Almacena si seguimos a un usuario
-  const following = await Follow.findOne({ 'user': identityUserId, 'followed': userId }).exec((err, follow) => {
-    if (err) return handleError(err); // Devuelve error por consola
-
-    return follow;
+  // Store if we follow a user
+  const following = await Follow.findOne({ user: identityUserId, followed: userId }).exec().then((following) => {
+    return following;
+  }).catch((err) => {
+    return handleError(err);
   });
 
-  // Almacena si el usuario identificado nos sigue
-  const followed = await Follow.findOne({ 'user': userId, 'followed': identityUserId }).exec((err, follow) => {
-    if (err) return handleError(err);
-
-    return follow;
+  // Store if the identified user follows
+  const followed = await Follow.findOne({ user: userId, followed: identityUserId }).exec().then((followed) => {
+    return followed;
+  }).catch((err) => {
+    return handleError(err);
   });
 
   return {
@@ -119,16 +119,14 @@ function getUser(req, res) {
 
       return res.status(200).send({ user, following: value.following, followed: value.followed });
     });
-
-    // return res.status(200).send({ user });
   });
 }
 
 async function followUserIds(userId) {
-  // Almacena un array de usuarios que estoy siguiendo
-  // Encuentra mi userId y desactiva los campos que no me interesa
+  // Stores an array of users that I am following
+  // Find my userId and deactivate the fields that do not interest me
   const following = await Follow.find({ 'user': userId }).select({ '_id': 0, '__v': 0, 'user': 0 }).exec().then((following) => {
-    // Procesar following ids
+    // Process following ids
     const followingClean = [];
 
     following.forEach((follow) => {
@@ -142,7 +140,7 @@ async function followUserIds(userId) {
 
   //
   const followed = await Follow.find({ 'followed': userId }).select({ '_id': 0, '__v': 0, 'followed': 0 }).exec().then((followed) => {
-    // Procesar followed ids
+    // Process followed ids
     const followedClean = [];
 
     followed.forEach((follow) => {
@@ -162,7 +160,7 @@ async function followUserIds(userId) {
 
 // List all users stored by page blocks
 function getUsers(req, res) {
-  const identityUserId = req.user.sub; // Almacena el id del usuario logueado
+  const identityUserId = req.user.sub; // Stores the id of the logged in user
   let page = 1;
   const itemsPerPage = 5; // Number of users displayed per page
 
@@ -219,7 +217,7 @@ async function getCountFollow(userId) {
 // Method that returns the counter of how many people follow us?
 // How many people do I follow? How many publications do I have?
 function getCounters(req, res) {
-  const userId = req.user.sub;
+  let userId = req.user.sub;
 
   if (req.params.id) {
     userId = req.params.id;
