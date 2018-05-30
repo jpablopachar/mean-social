@@ -41,7 +41,7 @@ function getReceivedMessages(req, res) {
   // Look for the messages we receive and populate with the data of the user who sent the message
   // It is ordered in descending order and we present them in a paged form
   // We populate the data that we want
-  Message.find({ receiver: userId }).populate('emitter', 'name surname image nick _id').sort('-createdAt').paginate(page, itemsPerPage, (err, messages, total) => {
+  Message.find({ receiver: userId }).sort('-createdAt').populate('emitter', 'name surname image nickname _id').paginate(page, itemsPerPage, (err, messages, total) => {
     if (err) return res.status(500).send({ message: 'Error in the request' });
 
     if (!messages) return res.status(404).send({ message: 'No messages' });
@@ -67,7 +67,7 @@ function getEmmitMessages(req, res) {
   // Search the messages we send and complete with the data of the user who sent the message
   // It is ordered in descending order and we present them in a paged page
   // We complete the data we want
-  Message.find({ emitter: userId }).populate('emitter receiver', 'name surname image nick _id').sort('-createdAt').paginate(page, itemsPerPage, (err, messages, total) => {
+  Message.find({ emitter: userId }).sort('-createdAt').populate('emitter receiver', 'name surname image nickname _id').paginate(page, itemsPerPage, (err, messages, total) => {
     if (err) return res.status(500).send({ message: 'Error in the request' });
 
     if (!messages) return res.status(404).send({ message: 'No messages' });

@@ -1,0 +1,16 @@
+<div class="col-lg-4">
+  <h3>{{ title }}</h3>
+  <div class="sidebar-main">
+    <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
+      <li role="presentation" [routerLinkActive]="['active']"><a [routerLink]="['send']">Send message</a></li>
+      <li role="presentation" [routerLinkActive]="['active']"><a [routerLink]="['received']">Received message</a></li>
+      <li role="presentation" [routerLinkActive]="['active']"><a [routerLink]="['sending']">Sending message</a></li>
+      <li role="presentation"><a [routerLink]="['/home']">Information</a></li>
+    </ul>
+  </div>
+</div>
+<div class="col-lg-8">
+  <router-outlet></router-outlet>
+</div>
+
+
